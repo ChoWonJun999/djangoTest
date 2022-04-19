@@ -3,5 +3,7 @@ from home import views
 
 urlpatterns = [
     path('', views.home),
-    path('create/', views.create)
+    path('if/', views.insertFage),
+    path('i/', views.insert),
+    path('delete/', views.dataDelete)
 ]

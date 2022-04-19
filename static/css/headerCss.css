@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.app {
+    overflow: hidden;
+}
+.header {
+    text-align: center;
+    border: 1px solid #ddd;
+}
+.homeTitle{
+    text-decoration-line: none;
+    font-size: 50px;
+    font-weight: 600;
+    color: black;
+}
+.nav{
+    margin: -5px;
+    border-bottom: 1px solid #ddd;
+}
+.nav ul li{
+    cursor: pointer;
+    list-style-type: none;
+    display: inline;
+    margin-right: 20px;
+}
+.container {
+    height: 70%;
+    color: #134371;
+    font-weight: 600;
+    padding: 5px;
+    margin: 20px;
+}
+.content {
+    height: 100%;
+    width: 100%;
+}
+.footer{
+    cursor: default;
+    border-top: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+    font-size: 5px;
+    font-weight: 400;
+    position : absolute;
+    bottom : 5;
+    width: 99%;
+}

@@ -1,20 +1,24 @@
-<html>
-    <css>
-        header{color:red}
-    </css>
-    <head>
-        <h1>
-            <a name="header" href="/">Home</a>
-        </h1>
-    </head>
-    <body>
-        <ul>
-            <li>
-                {tag}
-            </li>
-            <li>
-                <a href="/create/">create</a>
-            </li>
-        </ul>
-    </body>
-    </html>
+{% extends 'headerTemplate.html' %}
+{% block content %}
+<script>
+    function ddd(id){
+        $("#id").val(id);
+        document.frm.action = "/delete/";
+        document.frm.submit();
+    }
+</script>
+<form name="frm" method="POST" action="/if/">
+    {% csrf_token %}
+    <input type="hidden" id="id" name="id"/>
+    <ul>
+        {% for test in test %}
+        <li>
+            {{test.test_text}}
+            <a onclick="ddd('{{test.id}}')">삭제</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <input type="submit" value="등록"/>
+</form>
+{% endblock %}

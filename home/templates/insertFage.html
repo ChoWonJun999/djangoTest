@@ -1,0 +1,11 @@
+{% extends 'headerTemplate.html' %}
+{% block content %}
+<body>
+    <form method="POST" action="/i/">
+        {% csrf_token %}
+        <input type="text" name="text" value=""/>
+        <input type="submit" value="등록"/>
+    </form>
+    <a href="/">뒤로가기</a>
+</body>
+{% endblock %}
