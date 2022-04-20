@@ -1,0 +1,36 @@
+{% extends 'headerTemplate.html' %}
+{% block content %}
+<script>
+    function changeStatus(){
+        chk = $("#chk").val();
+        $.ajax({
+            url : "{% url 'changeStatus' %}"
+            , type : "POST"
+            , dataType : "json"
+            , data : {"chk":chk, 'csrfmiddlewaretoken': '{{ csrf_token }}'}
+            , success : function(obj){
+                if(chk == "True"){
+                    $("#chk").val("False");
+                    $("#chk_btn").text("Off");
+                }else{
+                    $("#chk").val("True");
+                    $("#chk_btn").text("On");
+                }
+            }, error : function(){
+                console.log('안돼');
+            }
+        });
+    }
+</script>
+<form id="frm" name="frm">
+    {% csrf_token %}
+    <input type="hidden" id="chk" name="chk" value="{{chk.status_chk}}"/>
+    <a id="chk_btn" class="btn" onclick="changeStatus()">
+        {% if chk.status_chk %}
+            On
+        {% else %}
+            Off
+        {% endif %}
+    </a>
+</form>
+{% endblock %}

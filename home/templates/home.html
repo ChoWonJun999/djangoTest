@@ -7,14 +7,14 @@
         document.frm.submit();
     }
 </script>
-<form name="frm" method="POST" action="/if/">
+<form id="frm" name="frm" method="POST" action="/if/">
     {% csrf_token %}
     <input type="hidden" id="id" name="id"/>
     <ul>
         {% for test in test %}
         <li>
             {{test.test_text}}
-            <a onclick="ddd('{{test.id}}')">삭제</a>
+            <a class="btn" onclick="ddd('{{test.id}}')">삭제</a>
         </li>
         {% endfor %}
     </ul>

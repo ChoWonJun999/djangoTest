@@ -58,16 +58,15 @@ access = "CR3vYIFTqY2bhXpJ8AU8OK8YrlDCwYq3dkutsHM4"
 secret = "PPPxxTjZG1LWPRqeTg5xoQGEsSVpr1DnqxUW1Qxx"
 
 upbit = pyupbit.Upbit(access, secret)
-# print("AutoTrade Start")
+print("AutoTrade Start")
 
-ticker = "KRW-BTC"
-cnt = 20
-k = 2
-
-# print(upbit.get_balances())
 def trade() :
+    ticker = "KRW-BTC"
+    cnt = 20
+    k = 2
     while True : 
         try :
+            print("haha")
             schedule.run_pending()
             current_price = get_current_price(ticker)
             krw = get_balance("KRW")

@@ -25,6 +25,15 @@ body {
     display: inline;
     margin-right: 20px;
 }
+.nav ul li a{
+    text-decoration-line: none;
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+}
+.nav .onoff{
+    float: right;
+}
 .container {
     height: 70%;
     color: #134371;
@@ -46,4 +55,17 @@ body {
     position : absolute;
     bottom : 5;
     width: 99%;
+}
+
+.btn{
+    cursor: pointer;
+    text-decoration: none; 
+    font: menu;
+    display: inline-block; 
+    padding: 2px 8px;
+    background: ButtonFace; 
+    color: ButtonText;
+    border-style: solid; 
+    border-width: 2px;
+    border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
 }
