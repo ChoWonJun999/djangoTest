@@ -58,8 +58,9 @@ access = "CR3vYIFTqY2bhXpJ8AU8OK8YrlDCwYq3dkutsHM4"
 secret = "PPPxxTjZG1LWPRqeTg5xoQGEsSVpr1DnqxUW1Qxx"
 
 upbit = pyupbit.Upbit(access, secret)
-print("AutoTrade Start")
 
+# print("AutoTrade Start")
+print("from home import AutoTradeModule")
 def trade() :
     ticker = "KRW-BTC"
     cnt = 20

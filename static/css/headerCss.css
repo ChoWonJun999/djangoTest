@@ -1,11 +1,13 @@
+html {
+    overflow-x: hidden;
+}
 body {
     margin: 0;
     padding: 0;
 }
-.app {
-    overflow: hidden;
-}
 .header {
+    position: relative;
+    background-color: white;
     text-align: center;
     border: 1px solid #ddd;
 }
@@ -16,6 +18,7 @@ body {
     color: black;
 }
 .nav{
+    position: relative;
     margin: -5px;
     border-bottom: 1px solid #ddd;
 }
@@ -35,7 +38,8 @@ body {
     float: right;
 }
 .container {
-    height: 70%;
+    position: relative;
+    height: 745px;
     color: #134371;
     font-weight: 600;
     padding: 5px;
@@ -46,15 +50,14 @@ body {
     width: 100%;
 }
 .footer{
+    position: relative;
     cursor: default;
     border-top: 1px solid #ddd;
     padding: 5px;
     text-align: center;
     font-size: 5px;
     font-weight: 400;
-    position : absolute;
-    bottom : 5;
-    width: 99%;
+    background-color: white;
 }
 
 .btn{
@@ -68,4 +71,22 @@ body {
     border-style: solid; 
     border-width: 2px;
     border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
+}
+.headerContent{
+    line-height: 45px;
+    cursor: default;
+    font-size: 25px;
+    color: black;
+}
+.bodyContent table{
+    width: 100%;
+}
+.bodyContent table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+.bodyContent table .num{
+    text-align: right;
+    padding-right: 3px;
 }

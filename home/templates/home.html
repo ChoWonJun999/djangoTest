@@ -10,15 +10,46 @@
 <form id="frm" name="frm" method="POST" action="/if/">
     {% csrf_token %}
     <input type="hidden" id="id" name="id"/>
-    <ul>
-        {% for test in test %}
-        <li>
-            {{test.test_text}}
-            <a class="btn" onclick="ddd('{{test.id}}')">삭제</a>
-        </li>
-        {% endfor %}
-    </ul>
-
-    <input type="submit" value="등록"/>
+    <div class="headerContent">
+        <a>전체 계좌 조회</a>
+    </div>
+    <div class="bodyContent">
+        <table>
+            <tr>
+                <th>화폐를 의미하는 영문 대문자 코드</th>
+                <th>주문가능 금액/수량</th>
+                <th>주문 중 묶여있는 금액/수량</th>
+                <th>매수평균가</th>
+                <th>현재가</th>
+            </tr>
+            {% for balance in balances %}
+            <tr>
+                <td>
+                    {{balance.currency}}
+                </td>
+                <td class="num">
+                    {{balance.balance}} 원
+                </td>
+                <td class="num">
+                    {{balance.locked}}
+                </td>
+                <td class="num">
+                    {% if balance.avg_buy_price == 0 %}
+                        -
+                    {% else %}
+                        {{balance.avg_buy_price}}
+                    {% endif %}
+                </td>
+                <td class="num">
+                    {% if balance.cur == '0' %}
+                        -
+                    {% else %}
+                        {{balance.cur}}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </form>
 {% endblock %}

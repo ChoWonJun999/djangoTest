@@ -10,7 +10,21 @@ import time
 from home import AutoTradeModule
 
 def home(request) :
+    # balances = AutoTradeModule.balances_cho()
+    print("end")
+    # for bal in balances :
+    #     bal['balance'] = float(bal['balance'])
+    #     bal['avg_buy_price'] = float(bal['avg_buy_price'])
+    #     if bal['avg_buy_price'] != 0:
+    #         bal['cur'] = AutoTradeModule.get_current_price('KRW-'+bal['currency'])
+    #         bal['balance'] = bal['balance'] * bal['cur']
+    #         bal['cur'] = round(bal['cur'])
+    #     else :
+    #         bal['cur'] = '0'
+    #     bal['balance'] = round(bal['balance'])
+    #     bal['avg_buy_price'] = round(bal['avg_buy_price'])
     test = Test.objects.all().order_by('-id')
+    # data = {'test':test, 'balances':balances}
     data = {'test':test}
     return render(request, 'home.html', data)
 

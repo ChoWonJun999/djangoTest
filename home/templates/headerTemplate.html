@@ -8,38 +8,36 @@
         <title>Home</title>
     </head>
     <body>
-        <div class="app">
-            <div class="header">
-                <a class="homeTitle" href="/">Home</a>
+        <div class="header">
+            <a class="homeTitle" href="/">Home</a>
+        </div>
+        <div class="nav">
+            <ul>
+                <li>
+                    <a href="/">전체 계좌 조회</a>
+                </li>
+                <li>
+                    <a href="/onoff/">나</a>
+                </li>
+                <li>
+                    <a href="">다</a>
+                </li>
+                <li>
+                    <a href="">라</a>
+                </li>
+                <li>
+                    <a href="">마</a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="content">
+                {% block content %}
+                {% endblock %}
             </div>
-            <div class="nav">
-                <ul>
-                    <li>
-                        <a href="/if/">가</a>
-                    </li>
-                    <li>
-                        <a href="/onoff/">나</a>
-                    </li>
-                    <li>
-                        <a href="">다</a>
-                    </li>
-                    <li>
-                        <a href="">라</a>
-                    </li>
-                    <li>
-                        <a href="">마</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="container">
-                <div class="content">
-                    {% block content %}
-                    {% endblock %}
-                </div>
-            </div>
-            <div class="footer">
-                <a>made in ChoWonJun</a>
-            </div>
+        </div>
+        <div class="footer">
+            <a>made in ChoWonJun</a>
         </div>
     </body>
 </html>
