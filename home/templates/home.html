@@ -9,6 +9,7 @@
 </script>
 <form id="frm" name="frm" method="POST" action="/if/">
     {% csrf_token %}
+    {% load humanize %}
     <input type="hidden" id="id" name="id"/>
     <div class="headerContent">
         <a>전체 계좌 조회</a>
@@ -16,36 +17,36 @@
     <div class="bodyContent">
         <table>
             <tr>
-                <th>화폐를 의미하는 영문 대문자 코드</th>
+                <th>종목 코드</th>
                 <th>주문가능 금액/수량</th>
-                <th>주문 중 묶여있는 금액/수량</th>
                 <th>매수평균가</th>
-                <th>현재가</th>
+                <th>시가</th>
+                <th>고가</th>
+                <th>저가</th>
+                <th>종가</th>
             </tr>
-            {% for balance in balances %}
+            {% for balance in data %}
             <tr>
                 <td>
-                    {{balance.currency}}
+                    {{ balance.market }}
                 </td>
                 <td class="num">
-                    {{balance.balance}} 원
+                    {{ balance.balance }}
                 </td>
                 <td class="num">
-                    {{balance.locked}}
+                    {{ balance.avg_buy_price }}
                 </td>
                 <td class="num">
-                    {% if balance.avg_buy_price == 0 %}
-                        -
-                    {% else %}
-                        {{balance.avg_buy_price}}
-                    {% endif %}
+                    {{ balance.opening_price }}
                 </td>
                 <td class="num">
-                    {% if balance.cur == '0' %}
-                        -
-                    {% else %}
-                        {{balance.cur}}
-                    {% endif %}
+                    {{ balance.high_price }}
+                </td>
+                <td class="num">
+                    {{ balance.low_price }}
+                </td>
+                <td class="num">
+                    {{balance.trade_price}}
                 </td>
             </tr>
             {% endfor %}

@@ -3,6 +3,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 <link rel="stylesheet" href="{% static 'css/headerCss.css' %}"/>
+<script>
+    $(document).ready(function(){
+        num_class = document.getElementsByClassName("num");
+        for(i=0; i<num_class.length; i++){
+            if(isNaN(num_class[i].innerHTML)){
+                num_class[i].innerHTML = '-';
+            }
+            console.log(num_class[i].innerHTML);
+        }
+    });
+</script>
 <html>
     <head>
         <title>Home</title>
