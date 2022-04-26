@@ -1,13 +1,6 @@
 {% extends 'headerTemplate.html' %}
 {% block content %}
-<script>
-    function ddd(id){
-        $("#id").val(id);
-        document.frm.action = "/delete/";
-        document.frm.submit();
-    }
-</script>
-<form id="frm" name="frm" method="POST" action="/if/">
+<form id="frm" name="frm" method="POST">
     {% csrf_token %}
     {% load humanize %}
     <input type="hidden" id="id" name="id"/>
@@ -18,35 +11,47 @@
         <table>
             <tr>
                 <th>종목 코드</th>
-                <th>주문가능 금액/수량</th>
-                <th>매수평균가</th>
+                <th>금액</th>
+                <!-- <th>보유/평가 금액</th> -->
+                <th>매수 평균가</th>
+                <th>현재가</th>
+
                 <th>시가</th>
                 <th>고가</th>
                 <th>저가</th>
-                <th>종가</th>
             </tr>
             {% for balance in data %}
             <tr>
-                <td>
-                    {{ balance.market }}
+                <td class="td_str">
+                    <a>{{ balance.market }}</a>
                 </td>
-                <td class="num">
-                    {{ balance.balance }}
+                <td class="td_num">
+                    <a class="num">{{ balance.current_price }}</a>
+                    원
+                    <!-- 
+                    <br>
+                    (<a class="num_float">{{ balance.balance }}</a>)
+                     -->
                 </td>
-                <td class="num">
-                    {{ balance.avg_buy_price }}
+                <td class="td_num">
+                    <a class="num">{{ balance.avg_buy_price }}</a>
+                    원
                 </td>
-                <td class="num">
-                    {{ balance.opening_price }}
+                <td class="td_num">
+                    <a class="num">{{ balance.trade_price }}</a>
+                    원
                 </td>
-                <td class="num">
-                    {{ balance.high_price }}
+                <td class="td_num">
+                    <a class="num">{{ balance.opening_price }}</a>
+                    원
                 </td>
-                <td class="num">
-                    {{ balance.low_price }}
+                <td class="td_num">
+                    <a class="num">{{ balance.high_price }}</a>
+                    원
                 </td>
-                <td class="num">
-                    {{balance.trade_price}}
+                <td class="td_num">
+                    <a class="num">{{ balance.low_price }}</a>
+                    원
                 </td>
             </tr>
             {% endfor %}

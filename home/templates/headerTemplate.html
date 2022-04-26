@@ -9,9 +9,26 @@
         for(i=0; i<num_class.length; i++){
             if(isNaN(num_class[i].innerHTML)){
                 num_class[i].innerHTML = '-';
+            }else{
+                if(Math.round(num_class[i].innerHTML) < 100){
+                    num_class[i].innerHTML = Math.round(num_class[i].innerHTML * 100)/100;
+                }else{
+                    num_class[i].innerHTML = Math.round(num_class[i].innerHTML);
+                }
+                num_class[i].innerHTML = num_class[i].innerHTML.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
-            console.log(num_class[i].innerHTML);
         }
+        /*
+        마우스 오버된 칸의 행열 모두 마우스 오버 적용
+         */
+        $("td").mouseover(function(){
+            var table3 = $(this).parent();
+            $(table3).addClass("td_over");
+        });
+        $("td").mouseout(function(){
+            var table3 = $(this).parent();
+            $(table3).removeClass("td_over");
+        });
     });
 </script>
 <html>
