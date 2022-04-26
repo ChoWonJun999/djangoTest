@@ -1,0 +1,1 @@
+default_app_config = 'home.auto_trade_thread.MyAppConfig'

@@ -1,18 +1,17 @@
 {% extends 'headerTemplate.html' %}
 {% block content %}
-<form id="frm" name="frm" method="POST">
-    {% csrf_token %}
+<form id="frm" name="frm">
+    <!-- {% csrf_token %} -->
     {% load humanize %}
     <input type="hidden" id="id" name="id"/>
     <div class="headerContent">
-        <a>전체 계좌 조회</a>
+        <a class="headerContent_a_title">전체 계좌 조회</a>
     </div>
     <div class="bodyContent">
         <table>
             <tr>
                 <th>종목 코드</th>
                 <th>금액</th>
-                <!-- <th>보유/평가 금액</th> -->
                 <th>매수 평균가</th>
                 <th>현재가</th>
 
@@ -28,10 +27,6 @@
                 <td class="td_num">
                     <a class="num">{{ balance.current_price }}</a>
                     원
-                    <!-- 
-                    <br>
-                    (<a class="num_float">{{ balance.balance }}</a>)
-                     -->
                 </td>
                 <td class="td_num">
                     <a class="num">{{ balance.avg_buy_price }}</a>
