@@ -1,15 +1,10 @@
 from django.shortcuts import render
 from requests import request
-import numpy as np
 
 from home.models import *
 from django.http import HttpResponseRedirect, JsonResponse
 
-import threading
-
 import pyupbit
-import time
-import pandas as pd
 from home import auto_trade_thread as att
 
 auto_trade_thread = att.auto_trade_thread
@@ -54,6 +49,17 @@ def changeStatus(request) :
     context = {"result" : "success"}
     return JsonResponse(context)
 
+def transHistory(request) :
+    """
+        거래 내역 Page
+    """
+    order = att.upbit.get_order("KRW-BTC", state='done', limit=1);
+    print("order = ", order)
+    data = {'orders' : order}
+    return render(request, 'transHistory.html', data)
+
+
+""" 참고용 추후에 삭제 """
 def insertFage(request) :
     return render(request, 'insertFage.html')
 

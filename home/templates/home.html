@@ -1,8 +1,15 @@
 {% extends 'headerTemplate.html' %}
+<!-- 
+    * headerTemplate.html 상속
+ -->
 {% block content %}
 <form id="frm" name="frm">
-    <!-- {% csrf_token %} -->
-    {% load humanize %}
+    <!--
+        {% csrf_token %}
+        * CSRF(Cross-site request forgery) : 사용자가 자기 의지와 무관하게 공격자가 의도한 행위를 특정 웹사이트에 요청하게 하는 방식의 공격; 난수 비슷한 것?
+        * POST 형태로 데이터 넘길때 CSRF 토큰을 넘김
+        * 없이 데이터 넘길 시 403 error 발생
+    -->
     <input type="hidden" id="id" name="id"/>
     <div class="head_con">
         <a class="head_con_title">전체 계좌 조회</a>
