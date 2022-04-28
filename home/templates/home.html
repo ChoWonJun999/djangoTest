@@ -4,47 +4,47 @@
     <!-- {% csrf_token %} -->
     {% load humanize %}
     <input type="hidden" id="id" name="id"/>
-    <div class="headerContent">
-        <a class="headerContent_a_title">전체 계좌 조회</a>
+    <div class="head_con">
+        <a class="head_con_title">전체 계좌 조회</a>
     </div>
-    <div class="bodyContent">
+    <div class="body_con">
         <table>
-            <tr>
-                <th>종목 코드</th>
-                <th>금액</th>
-                <th>매수 평균가</th>
-                <th>현재가</th>
+            <tr class="ta_head">
+                <th class="ta_hov col1" data-column="col1">종목 코드</th>
+                <th class="ta_hov col2" data-column="col2">금액</th>
+                <th class="ta_hov col3" data-column="col3">매수 평균가</th>
+                <th class="ta_hov col4" data-column="col4">현재가</th>
 
-                <th>시가</th>
-                <th>고가</th>
-                <th>저가</th>
+                <th class="ta_hov col5" data-column="col5">시가</th>
+                <th class="ta_hov col6" data-column="col6">고가</th>
+                <th class="ta_hov col7" data-column="col7">저가</th>
             </tr>
             {% for balance in data %}
             <tr>
-                <td class="td_str">
+                <td class="ta_hov td_str col1" data-column="col1">
                     <a>{{ balance.market }}</a>
                 </td>
-                <td class="td_num">
+                <td class="ta_hov td_num col2" data-column="col2">
                     <a class="num">{{ balance.current_price }}</a>
                     원
                 </td>
-                <td class="td_num">
+                <td class="ta_hov td_num col3" data-column="col3">
                     <a class="num">{{ balance.avg_buy_price }}</a>
                     원
                 </td>
-                <td class="td_num">
+                <td class="ta_hov td_num col4" data-column="col4">
                     <a class="num">{{ balance.trade_price }}</a>
                     원
                 </td>
-                <td class="td_num">
+                <td class="ta_hov td_num col5" data-column="col5">
                     <a class="num">{{ balance.opening_price }}</a>
                     원
                 </td>
-                <td class="td_num">
+                <td class="ta_hov td_num col6" data-column="col6">
                     <a class="num">{{ balance.high_price }}</a>
                     원
                 </td>
-                <td class="td_num">
+                <td class="ta_hov td_num col7" data-column="col7">
                     <a class="num">{{ balance.low_price }}</a>
                     원
                 </td>

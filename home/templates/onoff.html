@@ -24,10 +24,10 @@
 </script>
 <form id="frm" name="frm">
     {% csrf_token %}
-    <div class="headerContent">
-        <a class="headerContent_a_title">Auto Trade</a>
+    <div class="head_con">
+        <a class="head_con_title">Auto Trade</a>
         <div style="float: right;">
-            <a class="headerContent_a_sub">현재 방식 : 볼린저 밴드</a>
+            <a class="head_con_sub">현재 방식 : 볼린저 밴드</a>
             <input type="hidden" id="chk" name="chk" value="{{chk.status_chk}}"/>
             <a id="chk_btn" class="btn" onclick="changeStatus()">
                 {% if chk.status_chk %}
@@ -38,7 +38,7 @@
             </a>
         </div>
     </div>
-    <div class="bodyContent">
+    <div class="body_con">
         <div>
             <table>
                 <colgroup>
@@ -46,41 +46,41 @@
                     <col width="70%">
                     <col width="10%">
                 </colgroup>
-                <tr>
-                    <th>방식</th>
-                    <th>설명</th>
-                    <th>선택</th>
+                <tr class="ta_head">
+                    <th class="ta_hov col1" data-column="col1">방식</th>
+                    <th class="ta_hov col2" data-column="col2">설명</th>
+                    <th class="ta_hov col3" data-column="col3">선택</th>
                 </tr>
                 <tr>
-                    <td>변동성 전략</td>
-                    <td class="td_content">
+                    <td class="ta_hov td_str col1" data-column="col1">변동성 전략</td>
+                    <td class="td_con ta_hov td_num col2" data-column="col2">
                         매수 : 전 타임 종가 + (전 타임 고가 - 전 타임) * K 이상 상승
                         <br>
                         매도 : 기준 시간 기준 종료
                     </td>
-                    <td>
+                    <td class="ta_hov td_num col3" data-column="col3">
                         <a class="btn">변경</a>
                     </td>
                 </tr>
                 <tr>
-                    <td>볼린저 밴드</td>
-                    <td class="td_content">
+                    <td class="ta_hov td_str col1" data-column="col1">볼린저 밴드</td>
+                    <td class="td_con ta_hov td_num col2" data-column="col2">
                         매수 : 60분 봉 기준 현 타임과 전전타임이 볼린저 밴드 하단 1.5% 이상 하락 & 15분 봉 기준 현 타임과 전전타임이 볼린저 밴드 하단 1.5% 이상 하락
                         <br>
                         매도 : 매수가의 1.5% 이상 상승
                     </td>
-                    <td>
+                    <td class="ta_hov td_num col3" data-column="col3">
                         <a class="btn">변경</a>
                     </td>
                 </tr>
                 <tr>
-                    <td>5-10</td>
-                    <td class="td_content">
+                    <td class="ta_hov td_str col1" data-column="col1">5-10</td>
+                    <td class="td_con ta_hov td_num col2" data-column="col2">
                         매수 : MA5 > MA10
                         <br>
                         매도 : MA5 < MA10
                     </td>
-                    <td>
+                    <td class="ta_hov td_num col3" data-column="col3">
                         <a class="btn">변경</a>
                     </td>
                 </tr>

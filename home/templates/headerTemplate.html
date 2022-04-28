@@ -21,13 +21,19 @@
         /*
         마우스 오버된 칸의 행열 모두 마우스 오버 적용
          */
-        $("td").mouseover(function(){
-            var table3 = $(this).parent();
-            $(table3).addClass("td_over");
+        $(".ta_hov").mouseover(function(){
+            var table = $(this).parent();
+            $(table).addClass("ta_rc_hov");                     // row hover add
+            var column = $(this).data("column");
+            $("."+column).addClass("ta_rc_hov");                // column hover add
+            $(".ta_head ."+column).addClass("ta_head_hov");     // title hover add
         });
-        $("td").mouseout(function(){
-            var table3 = $(this).parent();
-            $(table3).removeClass("td_over");
+        $(".ta_hov").mouseout(function(){
+            var table = $(this).parent();
+            $(table).removeClass("ta_rc_hov");                  // row hover remove
+            var column = $(this).data("column");
+            $("."+column).removeClass("ta_rc_hov");             // column hover remove
+            $(".ta_head ."+column).removeClass("ta_head_hov");  // title hover remove
         });
     });
 </script>
@@ -37,7 +43,7 @@
     </head>
     <body>
         <div class="header">
-            <a class="homeTitle" href="/">Home</a>
+            <a class="home_title" href="/">Home</a>
         </div>
         <div class="nav">
             <ul>
