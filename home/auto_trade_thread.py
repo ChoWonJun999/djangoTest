@@ -4,6 +4,7 @@ import threading
 import time
 import schedule
 import pyupbit
+import pandas as pd
 
 class MyAppConfig(AppConfig) :
     name = 'home'

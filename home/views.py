@@ -4,7 +4,6 @@ from requests import request
 from home.models import *
 from django.http import HttpResponseRedirect, JsonResponse
 
-import pyupbit
 from home import auto_trade_thread as att
 
 auto_trade_thread = att.auto_trade_thread
