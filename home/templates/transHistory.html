@@ -1,6 +1,45 @@
 {% extends 'headerTemplate.html' %}
 {% block content %}
 <form id="frm" name="frm">
-    {{ orders }}
+    {% csrf_token %}
+    <div class="head_con">
+        <a class="head_con_title">거래 내역</a>
+    </div>
+    <div class="nav_con">
+        <ul>
+            <li>
+                <select id="select_market" name="select_market" class="nav_select">
+                    <option>BTC</option>
+                    <option>JST</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="body_con">
+        <table>
+            <tr class="ta_head">
+                <th class="ta_hov col1" data-column="col1">코인</th>
+                <th class="ta_hov col2" data-column="col2">주문 종류</th>
+                <th class="ta_hov col3" data-column="col3">거래량</th>
+                <th class="ta_hov col4" data-column="col4">수수료</th>
+                <th class="ta_hov col5" data-column="col5">거래 시간</th>
+            </tr>
+            {% for order in orders %}
+            <tr>
+                <td class="ta_hov td_str col1" data-column="col1"><a>{{ order.market }}</a></td>
+                <td class="ta_hov td_str col2" data-column="col2">
+                    {% if order.side == '매수'%}
+                        <a style="color:red">{{ order.side }}</a>
+                    {% else %}
+                        <a style="color:blue">{{ order.side }}</a>
+                    {% endif %}
+                </td>
+                <td class="ta_hov td_num col3" data-column="col3"><a>{{ order.executed_volume }}</a></td>
+                <td class="ta_hov td_num col4" data-column="col4"><a>{{ order.paid_fee }}</a></td>
+                <td class="ta_hov td_str col5" data-column="col5"><a>{{ order.created_at }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </form>
 {% endblock %}

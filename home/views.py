@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect, JsonResponse
 
 from home import auto_trade_thread as att
 
+from dateutil.parser import parse
+
 auto_trade_thread = att.auto_trade_thread
 upbit = att.upbit
 
@@ -17,6 +19,14 @@ def home(request) :
     qs = [vals for vals in df.to_dict('records')]
     data = {'data':qs}
     return render(request, 'home.html', data)
+
+def transHistory(request) :
+    """
+        거래 내역 Page
+    """
+    orders = att.upbit.get_order_list("KRW-JST");
+    data = {'orders' : orders}
+    return render(request, 'transHistory.html', data)
 
 def onoff(request) :
     """
@@ -47,15 +57,6 @@ def changeStatus(request) :
     status.save()
     context = {"result" : "success"}
     return JsonResponse(context)
-
-def transHistory(request) :
-    """
-        거래 내역 Page
-    """
-    order = att.upbit.get_order("KRW-BTC", state='done', limit=1);
-    print("order = ", order)
-    data = {'orders' : order}
-    return render(request, 'transHistory.html', data)
 
 
 """ 참고용 추후에 삭제 """

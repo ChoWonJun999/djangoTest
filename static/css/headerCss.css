@@ -91,6 +91,22 @@ body {
     font-size: 15px;
     color: black;
 }
+.nav_con{
+    position: relative;
+    margin: -5px;
+}
+.nav_con ul li{
+    cursor: pointer;
+    list-style-type: none;
+    display: inline;
+    margin-right: 20px;
+}
+.nav_con ul li a{
+    text-decoration-line: none;
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+}
 table{
     cursor: default;
     width: 100%;
