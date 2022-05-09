@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 
 from home import auto_trade_thread as att
 
-from dateutil.parser import parse
+import pyupbit
 
 auto_trade_thread = att.auto_trade_thread
 upbit = att.upbit
@@ -24,8 +24,11 @@ def transHistory(request) :
     """
         거래 내역 Page
     """
-    orders = att.upbit.get_order_list("KRW-JST");
-    data = {'orders' : orders}
+    markets = pyupbit.get_tickers(fiat="KRW");
+    markets = [market[4:] for market in markets]
+    markets.sort()
+    orders = upbit.get_order_list("KRW-BTC") if request.POST.get('nav_select_market') == None else att.upbit.get_order_list("KRW-"+request.POST.get('nav_select_market'))
+    data = {'markets': markets, 'orders' : orders, 'select_market':request.POST.get('nav_select_market')}
     return render(request, 'transHistory.html', data)
 
 def onoff(request) :

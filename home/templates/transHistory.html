@@ -1,6 +1,15 @@
 {% extends 'headerTemplate.html' %}
 {% block content %}
-<form id="frm" name="frm">
+<script>
+    $(document).ready(function(){
+        if("{{select_market}}" == "None"){
+            $("#nav_select_market").val("BTC");
+        }else{
+            $("#nav_select_market").val("{{select_market}}");
+        }
+    });
+</script>
+<form id="frm" name="frm" method="POST">
     {% csrf_token %}
     <div class="head_con">
         <a class="head_con_title">거래 내역</a>
@@ -8,9 +17,10 @@
     <div class="nav_con">
         <ul>
             <li>
-                <select id="select_market" name="select_market" class="nav_select">
-                    <option>BTC</option>
-                    <option>JST</option>
+                <select id="nav_select_market" name="nav_select_market" class="nav_select" onchange="document.frm.submit();">
+                    {% for market in markets %}
+                    <option value="{{ market }}">{{ market }}</option>
+                    {% endfor %}
                 </select>
             </li>
         </ul>
@@ -20,9 +30,12 @@
             <tr class="ta_head">
                 <th class="ta_hov col1" data-column="col1">코인</th>
                 <th class="ta_hov col2" data-column="col2">주문 종류</th>
-                <th class="ta_hov col3" data-column="col3">거래량</th>
-                <th class="ta_hov col4" data-column="col4">수수료</th>
-                <th class="ta_hov col5" data-column="col5">거래 시간</th>
+                <th class="ta_hov col3" data-column="col3">거래 수량</th>
+                <th class="ta_hov col4" data-column="col4">거래 단가</th>
+                <th class="ta_hov col5" data-column="col5">거래 금액</th>
+                <th class="ta_hov col6" data-column="col6">수수료</th>
+                <th class="ta_hov col7" data-column="col7">정산 금액</th>
+                <th class="ta_hov col8" data-column="col8">거래 시간</th>
             </tr>
             {% for order in orders %}
             <tr>
@@ -35,10 +48,18 @@
                     {% endif %}
                 </td>
                 <td class="ta_hov td_num col3" data-column="col3"><a>{{ order.executed_volume }}</a></td>
-                <td class="ta_hov td_num col4" data-column="col4"><a>{{ order.paid_fee }}</a></td>
-                <td class="ta_hov td_str col5" data-column="col5"><a>{{ order.created_at }}</a></td>
+                <td class="ta_hov td_num col4" data-column="col4"><a class="num">{{ order.trades }}</a></td>
+                <td class="ta_hov td_num col5" data-column="col5"><a class="num">{{ order.price }}</a></td>
+                <td class="ta_hov td_num col6" data-column="col6"><a class="num">{{ order.paid_fee }}</a></td>
+                <td class="ta_hov td_num col7" data-column="col7"><a class="num">{{ order.cal_price }}</a></td>
+                <td class="ta_hov td_str col8" data-column="col8"><a>{{ order.created_at }}</a></td>
             </tr>
             {% endfor %}
+            {% if orders|length == 0 %}
+            <tr>
+                <td colspan="8">거래 내역이 없습니다.</td>
+            </tr>
+            {% endif %}
         </table>
     </div>
 </form>

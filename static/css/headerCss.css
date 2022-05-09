@@ -13,7 +13,7 @@ body {
     padding: 0;
 }
 .header {
-    position: relative;
+    /* position: relative; */
     background-color: white;
     text-align: center;
     border: 1px solid #ddd;
@@ -25,7 +25,7 @@ body {
     color: black;
 }
 .nav{
-    position: relative;
+    /* position: relative; */
     margin: -5px;
     border-bottom: 1px solid #ddd;
 }
@@ -45,22 +45,23 @@ body {
     float: right;
 }
 .container {
-    position: relative;
-    height: 745px;
+    height: auto;
+    min-height: 70%;
+    padding-bottom: 10px;
     color: #134371;
     font-weight: 600;
     padding: 5px;
     margin: 20px;
 }
 .content {
-    height: 100%;
     width: 100%;
 }
 .footer{
+    height: 10px;
     position: relative;
+    transform : translateY(-100%);
     cursor: default;
     border-top: 1px solid #ddd;
-    padding: 5px;
     text-align: center;
     font-size: 5px;
     font-weight: 400;
@@ -151,4 +152,9 @@ table .td_num{
 table .td_con{
     text-align: left;
     padding-left: 3px;
+}
+.nav_select{
+    width: 10%;
+    font-size: 20px;
+    color: #333;
 }
