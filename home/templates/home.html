@@ -16,46 +16,58 @@
     <div class="body_con">
         <table>
             <tr class="ta_head">
-                <th class="ta_hov col1" data-column="col1">종목 코드</th>
-                <th class="ta_hov col2" data-column="col2">금액</th>
-                <th class="ta_hov col3" data-column="col3">매수 평균가</th>
+                <th class="ta_hov col1" data-column="col1">코인</th>
+                <th class="ta_hov col2" data-column="col2">보유 수량</th>
+                <th class="ta_hov col3" data-column="col3">매수평균가</th>
                 <th class="ta_hov col4" data-column="col4">현재가</th>
-
+                <th class="ta_hov col5" data-column="col5">매수 금액</th>
+                <th class="ta_hov col6" data-column="col6">평가 금액</th>
+                <th class="ta_hov col7" data-column="col7">평가 손익</th>
+                <!-- 
                 <th class="ta_hov col5" data-column="col5">시가</th>
                 <th class="ta_hov col6" data-column="col6">고가</th>
                 <th class="ta_hov col7" data-column="col7">저가</th>
+                 -->
             </tr>
             {% for balance in data %}
             <tr>
-                <td class="ta_hov td_str col1" data-column="col1">
-                    <a>{{ balance.market }}</a>
+                <td class="ta_hov col1" data-column="col1"><a>{{ balance.market }}</a></td>
+                <td class="ta_hov td_num col2" data-column="col2"><a>{{ balance.balance }}</a>&nbsp;<a class="unit">{{ balance.market }}</a></td>
+                <td class="ta_hov td_num col3" data-column="col3"><a class="num">{{ balance.avg_buy_price }}</a>&nbsp;<a class="unit">KRW</a></td>
+                <td class="ta_hov td_num col4" data-column="col4"><a class="num">{{ balance.trade_price }}</a>&nbsp;<a class="unit">KRW</a></td>
+                <td class="ta_hov td_num col5" data-column="col5"><a class="num">{{ balance.buy_price }}</a>&nbsp;<a class="unit">KRW</a></td>
+                <td class="ta_hov td_num col6" data-column="col6"><a class="num">{{ balance.current_price }}</a>&nbsp;<a class="unit">KRW</a></td>
+                <td class="ta_hov td_str col7" data-column="col7">
+                    {% if balance.eva_percent < 0 %}
+                        <a class="num" style="color: blue;">{{ balance.eva_percent }}</a>
+                    {% elif balance.eva_percent > 0 %}
+                        <a class="num" style="color: red;">{{ balance.eva_percent }}</a>
+                    {% else %}
+                        <a class="num" style="color: #999;">{{ balance.eva_percent }}</a>
+                    {% endif %}
+                    <a class="unit">% (</a>
+
+                    {% if balance.eva_percent < 0 %}
+                        <a class="num" style="color: blue;">{{ balance.eva_price }}</a>
+                    {% elif balance.eva_percent > 0 %}
+                        <a class="num" style="color: red;">{{ balance.eva_price }}</a>
+                    {% else %}
+                        <a class="num" style="color: #999;">{{ balance.eva_price }}</a>
+                    {% endif %}
+                    <a class="unit">KRW )</a>
                 </td>
-                <td class="ta_hov td_num col2" data-column="col2">
-                    <a class="num">{{ balance.current_price }}</a>
-                    원
-                </td>
-                <td class="ta_hov td_num col3" data-column="col3">
-                    <a class="num">{{ balance.avg_buy_price }}</a>
-                    원
-                </td>
-                <td class="ta_hov td_num col4" data-column="col4">
-                    <a class="num">{{ balance.trade_price }}</a>
-                    원
-                </td>
-                <td class="ta_hov td_num col5" data-column="col5">
-                    <a class="num">{{ balance.opening_price }}</a>
-                    원
-                </td>
-                <td class="ta_hov td_num col6" data-column="col6">
-                    <a class="num">{{ balance.high_price }}</a>
-                    원
-                </td>
-                <td class="ta_hov td_num col7" data-column="col7">
-                    <a class="num">{{ balance.low_price }}</a>
-                    원
-                </td>
+                <!-- 
+                <td class="ta_hov td_num col5" data-column="col5"><a class="num">{{ balance.opening_price }}</a> KRW</td>
+                <td class="ta_hov td_num col6" data-column="col6"><a class="num">{{ balance.high_price }}</a> KRW</td>
+                <td class="ta_hov td_num col7" data-column="col7"><a class="num">{{ balance.low_price }}</a> KRW</td>
+                 -->
             </tr>
             {% endfor %}
+            {% if data|length == 0 %}
+            <tr>
+                <td colspan="7">거래 코인이 없습니다.</td>
+            </tr>
+            {% endif %}
         </table>
     </div>
 </form>

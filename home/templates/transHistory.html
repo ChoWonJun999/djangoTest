@@ -7,6 +7,7 @@
         }else{
             $("#nav_select_market").val("{{select_market}}");
         }
+        $(".market_unit").text($("#nav_select_market").val());
     });
 </script>
 <form id="frm" name="frm" method="POST">
@@ -17,6 +18,7 @@
     <div class="nav_con">
         <ul>
             <li>
+                <a>코인</a>
                 <select id="nav_select_market" name="nav_select_market" class="nav_select" onchange="document.frm.submit();">
                     {% for market in markets %}
                     <option value="{{ market }}">{{ market }}</option>
@@ -39,20 +41,20 @@
             </tr>
             {% for order in orders %}
             <tr>
-                <td class="ta_hov td_str col1" data-column="col1"><a>{{ order.market }}</a></td>
-                <td class="ta_hov td_str col2" data-column="col2">
+                <td class="ta_hov col1" data-column="col1"><a>{{ order.market }}</a></td>
+                <td class="ta_hov col2" data-column="col2">
                     {% if order.side == '매수'%}
                         <a style="color:red">{{ order.side }}</a>
                     {% else %}
                         <a style="color:blue">{{ order.side }}</a>
                     {% endif %}
                 </td>
-                <td class="ta_hov td_num col3" data-column="col3"><a>{{ order.executed_volume }}</a></td>
-                <td class="ta_hov td_num col4" data-column="col4"><a class="num">{{ order.trades }}</a></td>
-                <td class="ta_hov td_num col5" data-column="col5"><a class="num">{{ order.price }}</a></td>
-                <td class="ta_hov td_num col6" data-column="col6"><a class="num">{{ order.paid_fee }}</a></td>
-                <td class="ta_hov td_num col7" data-column="col7"><a class="num">{{ order.cal_price }}</a></td>
-                <td class="ta_hov td_str col8" data-column="col8"><a>{{ order.created_at }}</a></td>
+                <td class="ta_hov td_num col3" data-column="col3"><a>{{ order.executed_volume }}</a>&nbsp;<a class="unit market_unit"></a></td>
+                <td class="ta_hov td_num col4" data-column="col4"><a class="num">{{ order.trades }}</a>&nbsp;<a class="unit">KRW</a></td>
+                <td class="ta_hov td_num col5" data-column="col5"><a class="num">{{ order.price }}</a>&nbsp;<a class="unit">KRW</a></td>
+                <td class="ta_hov td_num col6" data-column="col6"><a class="num">{{ order.paid_fee }}</a>&nbsp;<a class="unit">KRW</a></td>
+                <td class="ta_hov td_num col7" data-column="col7"><a class="num">{{ order.cal_price }}</a>&nbsp;<a class="unit">KRW</a></td>
+                <td class="ta_hov col8" data-column="col8"><a>{{ order.created_at }}</a></td>
             </tr>
             {% endfor %}
             {% if orders|length == 0 %}
