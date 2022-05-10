@@ -5,5 +5,9 @@ urlpatterns = [
     path('', views.home),
     path('onoff/', views.onoff),
     path('changeStatus/', views.changeStatus, name="changeStatus"),
-    path('transHistory/', views.transHistory)
+    path('changeMethod/', views.changeMethod, name="changeMethod"),
+    path('transHistory/', views.transHistory),
+
+    path('if/', views.insertFage),
+    path('i/', views.insert)
 ]

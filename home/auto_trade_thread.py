@@ -57,9 +57,11 @@ class Worker(threading.Thread):
         self._kill.set()
 
 def login() :
+    # api_key = Api_key.objects.filter(id=1)
+    # print(api_key)
     """upbit 로그인"""
-    access = "CR3vYIFTqY2bhXpJ8AU8OK8YrlDCwYq3dkutsHM4"
-    secret = "PPPxxTjZG1LWPRqeTg5xoQGEsSVpr1DnqxUW1Qxx"
+    access = 'CR3vYIFTqY2bhXpJ8AU8OK8YrlDCwYq3dkutsHM4'
+    secret = 'PPPxxTjZG1LWPRqeTg5xoQGEsSVpr1DnqxUW1Qxx'
 
     upbit = pyupbit.Upbit(access, secret)
     return upbit

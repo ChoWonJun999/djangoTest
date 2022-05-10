@@ -21,13 +21,30 @@
             }
         });
     }
+    function changeMethod(id, name){
+        if("True" == $("#chk").val()){
+            $.ajax({
+                url : "{% url 'changeMethod' %}"
+                , type : "POST"
+                , dataType : "json"
+                , data : {"id":id, "name":name, 'csrfmiddlewaretoken':'{{ csrf_token }}'}
+                , success : function(obj){
+                    document.frm.submit();
+                }, error : function(){
+                    console.log('안돼');
+                }
+            });
+        }else{
+            alert("거래 종료 후 변경하세요.");
+        }
+    }
 </script>
 <form id="frm" name="frm">
     {% csrf_token %}
     <div class="head_con">
         <a class="head_con_title">Auto Trade</a>
         <div style="float: right;">
-            <a class="head_con_sub">현재 방식 : 볼린저 밴드</a>
+            <a class="head_con_sub">현재 방식 : {{ chk.trade_method }}</a>
             <input type="hidden" id="chk" name="chk" value="{{chk.status_chk}}"/>
             <a id="chk_btn" class="btn" onclick="changeStatus()">
                 {% if chk.status_chk %}
@@ -36,56 +53,40 @@
                     Off
                 {% endif %}
             </a>
+            <!-- <a class="btn" href="/if/">등록</a> -->
         </div>
     </div>
     <div class="body_con">
-        <div>
-            <table>
-                <colgroup>
-                    <col width="20%">
-                    <col width="70%">
-                    <col width="10%">
-                </colgroup>
-                <tr class="ta_head">
-                    <th class="ta_hov col1" data-column="col1">방식</th>
-                    <th class="ta_hov col2" data-column="col2">설명</th>
-                    <th class="ta_hov col3" data-column="col3">선택</th>
-                </tr>
+        <table>
+            <colgroup>
+                <col width="20%">
+                <col width="70%">
+                <col width="10%">
+            </colgroup>
+            <tr class="ta_head">
+                <th class="ta_hov col1" data-column="col1">방식</th>
+                <th class="ta_hov col2" data-column="col2">설명</th>
+                <th class="ta_hov col3" data-column="col3">선택</th>
+            </tr>
+            {% for method in trade_method %}
                 <tr>
-                    <td class="ta_hov td_str col1" data-column="col1">변동성 전략</td>
-                    <td class="td_con ta_hov td_num col2" data-column="col2">
-                        매수 : 전 타임 종가 + (전 타임 고가 - 전 타임) * K 이상 상승
-                        <br>
-                        매도 : 기준 시간 기준 종료
-                    </td>
-                    <td class="ta_hov td_num col3" data-column="col3">
-                        <a class="btn">변경</a>
+                    <td class="ta_hov col1" data-column="col1">{{ method.method_name }}</td>
+                    <td class="ta_hov td_str col2" data-column="col2"><pre style="font-size: 15px;">{{ method.method_text }}</pre></td>
+                    <td class="ta_hov col3" data-column="col3">
+                        {% if chk.trade_method_id == method.id %}
+                            <a>사용중</a>
+                        {% else %}
+                            <a class="btn" onclick="changeMethod('{{method.id}}', '{{method.method_name}}')">변경</a>
+                        {% endif %}
                     </td>
                 </tr>
+            {% endfor %}
+            {% if trade_method|length == 0 %}
                 <tr>
-                    <td class="ta_hov td_str col1" data-column="col1">볼린저 밴드</td>
-                    <td class="td_con ta_hov td_num col2" data-column="col2">
-                        매수 : 60분 봉 기준 현 타임과 전전타임이 볼린저 밴드 하단 1.5% 이상 하락 & 15분 봉 기준 현 타임과 전전타임이 볼린저 밴드 하단 1.5% 이상 하락
-                        <br>
-                        매도 : 매수가의 1.5% 이상 상승
-                    </td>
-                    <td class="ta_hov td_num col3" data-column="col3">
-                        <a class="btn">변경</a>
-                    </td>
+                    <td colspan="3">거래 방식이 없습니다.</td>
                 </tr>
-                <tr>
-                    <td class="ta_hov td_str col1" data-column="col1">5-10</td>
-                    <td class="td_con ta_hov td_num col2" data-column="col2">
-                        매수 : MA5 > MA10
-                        <br>
-                        매도 : MA5 < MA10
-                    </td>
-                    <td class="ta_hov td_num col3" data-column="col3">
-                        <a class="btn">변경</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+            {% endif %}
+        </table>
     </div>
 </form>
 {% endblock %}

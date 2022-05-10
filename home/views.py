@@ -37,7 +37,8 @@ def onoff(request) :
     """
     print("auto_trade_thread.isAlive() = ", auto_trade_thread.isAlive())
     status_chk = Status.objects.filter(id=1)
-    data = {'chk':status_chk[0]}
+    trade_method = Trade_method.objects.all()
+    data = {'chk':status_chk[0], 'trade_method':trade_method}
     return render(request, 'onoff.html', data)
 
 def changeStatus(request) :
@@ -61,16 +62,30 @@ def changeStatus(request) :
     context = {"result" : "success"}
     return JsonResponse(context)
 
+def changeMethod(request) :
+    """
+        Auto Trade Page
+        Ajax
+        thread method change
+    """
+    status = Status.objects.get(id=1)
+    status.trade_method_id = request.POST.get('id')
+    status.trade_method = request.POST.get('name')
+    status.save()
+    context = {"result" : "success"}
+    return JsonResponse(context)
+
 
 """ 참고용 추후에 삭제 """
 def insertFage(request) :
     return render(request, 'insertFage.html')
 
 def insert(request) :
-    hometest = Test()
-    hometest.test_text = request.POST['text']
-    hometest.save()
-    return HttpResponseRedirect('/')
+    homeMethod = Trade_method()
+    homeMethod.method_name = request.POST['method_name']
+    homeMethod.method_text = request.POST['method_text']
+    homeMethod.save()
+    return HttpResponseRedirect('/onoff/')
 
 def dataDelete(request) :
     test = Test.objects.get(id=request.POST['id'])

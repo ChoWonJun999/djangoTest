@@ -153,10 +153,6 @@ table .td_num{
     text-align: right;
     padding-right: 3px;
 }
-table .td_con{
-    text-align: left;
-    padding-left: 3px;
-}
 .nav_select{
     width: 10%;
     font-size: 20px;

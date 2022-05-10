@@ -1,11 +1,32 @@
 {% extends 'headerTemplate.html' %}
 {% block content %}
-<body>
-    <form method="POST" action="/i/">
-        {% csrf_token %}
-        <input type="text" name="text" value=""/>
-        <input type="submit" value="등록"/>
-    </form>
-    <a href="/">뒤로가기</a>
-</body>
+<form method="POST" action="/i/">
+    {% csrf_token %}
+    <div class="head_con">
+        <a class="head_con_title">방식 등록</a>
+    </div>
+    <div class="nav_con">
+        <ul style="float: right;">
+            <li>
+                <input type="submit" value="등록"/>
+            </li>
+        </ul>
+    </div>
+    <div class="body_con">
+        <table>
+            <tr class="ta_head">
+                <th class="ta_hov col1" data-column="col1">방식</th>
+                <th class="ta_hov col2" data-column="col2">설명</th>
+            </tr>
+            <tr>
+                <td class="ta_hov col1" data-column="col1">
+                    <input type="text" name="method_name" style="width: 100%; height: 50px;" value=""/>
+                </td>
+                <td class="ta_hov col2" data-column="col2">
+                    <textarea name="method_text" style="width: 100%; height: 100px;"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
 {% endblock %}
