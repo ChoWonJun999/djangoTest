@@ -1,0 +1,49 @@
+{% load static %}
+<meta charset="utf-8">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/loginCss.css' %}"/>
+<script>
+    function user_join(){
+        document.frm.action = "/join/";
+        document.frm.submit();
+    }
+    function user_find(){
+        document.frm.action = "/";
+        document.frm.submit();
+    }
+    function go_home(){
+        _user_id = $("#user_id").val();
+        _user_pw = $("#user_pw").val();
+        $.ajax({
+            url : "{% url 'goHome' %}"
+            , type : "POST"
+            , dataType : "json"
+            , data : {'user_id':_user_id, 'user_pw':_user_pw, 'csrfmiddlewaretoken':'{{ csrf_token }}'}
+            , success : function(obj){
+                document.frm.submit();
+            }
+        });
+    }
+</script>
+<html>
+    <body>
+        <form id="frm" name="frm" method="POST" action="/">
+            {% csrf_token %}
+
+            <h3>Login</h3>
+
+            <label for="user_id">ID</label>
+            <input type="text" id="user_id" name="user_id" placeholder="ID"/>
+
+            <label for="user_pw">Password</label>
+            <input type="password" id="user_pw" name="user_pw" placeholder="Password"/>
+
+            <button onclick="go_home();">Log In</button>
+
+            <div class="login_sub">
+                <a class="join" onclick="user_join();">회원 가입</a>
+                <a class="find" onclick="user_find();">ID/PW 찾기</a>
+            </div>
+        </form>
+    </body>
+</html>

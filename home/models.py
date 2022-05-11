@@ -38,3 +38,14 @@ class Api_key(models.Model):
     """
     access_key = models.CharField(max_length=100)
     secret_key = models.CharField(max_length=100)
+
+class User(models.Model) :
+    """
+        user
+
+        Columns
+        user_id     아이디
+        user_pw     비밀번호
+    """
+    user_id = models.CharField(max_length=100)
+    user_pw = models.CharField(max_length=100)

@@ -1,0 +1,92 @@
+{% load static %}
+<meta charset="utf-8">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/loginCss.css' %}"/>
+<script>
+    function change_id(){
+        $("#user_id_checked").val("");
+    }
+    function check_id(){
+        _user_id = $("#user_id").val();
+        if(_user_id.length < 4){
+            alert("영문과 숫자 조합으로 4~12자리입력하세요.");
+            $("#user_id").val("");
+            $("#user_id").focus();
+            return;
+        }
+        $.ajax({
+            url : "{% url 'checkId' %}"
+            , type : "POST"
+            , dataType : "json"
+            , data : {'user_id':_user_id, 'csrfmiddlewaretoken':'{{ csrf_token }}'}
+            , success : function(obj){
+                if(obj.result){
+                    alert("사용 가능한 ID 입니다.");
+                    $("#user_id_checked").val(obj.result);
+                }else{
+                    alert("사용 불가능한 ID 입니다.");
+                    $("#user_id").val("");
+                    $("#user_id_checked").val("");
+                }
+            }
+        });
+    }
+    function user_join(){
+        if($("#user_id").val().length < 4){
+            alert("영문, 숫자로 4~12자리입력하세요.");
+            $("#user_id").val("");
+            $("#user_id").focus();
+            return;
+        }
+
+        if($("#user_id_checked").val() != "true"){
+            alert("중복 확인을 하세요.");
+            return;
+        }
+
+        if($("#user_pw").val().length < 8){
+            alert("영문, 숫자로 8~16자리입력하세요.");
+            $("#user_pw").val("");
+            $("#user_pw").focus();
+            return;
+        }
+
+        if($("#user_pw").val() != $("#user_pw_chk").val()){
+            alert("비밀번호가 다릅니다.");
+            $("#user_pw").val("");
+            $("#user_pw_chk").val("");
+            $("#user_pw").focus();
+            return;
+        }
+        alert("회원가입 완료");
+        document.frm.action = "/joinFinish/";
+        document.frm.submit();
+    }
+</script>
+<html>
+    <body>
+        <form id="frm" name="frm" method="POST" action="/">
+            {% csrf_token %}
+
+            <h3>회원 정보</h3>
+
+            <label for="user_id">ID</label>
+            <input type="text" id="user_id" name="user_id" placeholder="ID" onchange="change_id();" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-z0-9]/g, '');"/>
+
+            <div class="login_sub">
+                <input type="hidden" id="user_id_checked" name="user_id_checked"/>
+                <a class="btn" onclick="check_id();">중복 확인</a>
+            </div>
+
+            <label for="user_pw">Password</label>
+            <input type="password" id="user_pw" name="user_pw" placeholder="Password" maxlength="16" onkeyup="this.value=this.value.replace(/[^a-z0-9]/g, '');"/>
+
+            <label for="user_pw_chk">Password Check</label>
+            <input type="password" id="user_pw_chk" name="user_pw_chk" placeholder="Password Check" maxlength="16" onkeyup="this.value=this.value.replace(/[^a-z0-9]/g, '');"/>
+
+            <div class="login_sub">
+                <a class="btn" onclick="user_join();">회원 가입</a>
+            </div>
+        </form>
+    </body>
+</html>
