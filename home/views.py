@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from home.models import *
 from django.http import HttpResponseRedirect, JsonResponse
@@ -10,7 +10,6 @@ import pyupbit
 auto_trade_thread = att.auto_trade_thread
 upbit = att.upbit
 
-_user_pk = 0
 
 def login_html(request) :
     return render(request, 'login.html')
@@ -18,9 +17,7 @@ def login_html(request) :
 def goHome(request) :
     result = True
     try :
-        _user = User.objects.get(user_id=request.POST.get('user_id'), user_pw=request.POST.get('user_pw'));
-        global _user_pk
-        _user_pk = _user.id
+        User.objects.get(user_id=request.POST.get('user_id'), user_pw=request.POST.get('user_pw'));
     except :
         result = False
     context = {"result" : result}
@@ -58,17 +55,13 @@ def joinFinish(request) :
     return render(request, 'login.html')
 
 def logout(request) :
-    global _user_pk
-    _user_pk = 0
-    return login_html(request)
+    return render(request, 'login.html')
+    # return redirect('/login/')
 
 def home_html(request) :
     """
         전체 계좌 조회 Page
     """
-    global _user_pk
-    if _user_pk == 0 : return render(request, 'login.html')
-
     df = upbit.get_balances_tickers()
     qs = [vals for vals in df.to_dict('records')]
     data = {'data':qs}
@@ -78,9 +71,6 @@ def transHistory_html(request) :
     """
         거래 내역 Page
     """
-    global _user_pk
-    if _user_pk == 0 : return render(request, 'login.html')
-
     markets = pyupbit.get_tickers(fiat="KRW");
     markets = [market[4:] for market in markets]
     markets.sort()
@@ -92,9 +82,6 @@ def onoff_html(request) :
     """
         Auto Trade Page
     """
-    global _user_pk
-    if _user_pk == 0 : return render(request, 'login.html')
-
     print("auto_trade_thread.isAlive() = ", auto_trade_thread.isAlive())
     status_chk = Status.objects.filter(id=1)
     trade_method = Trade_method.objects.all()

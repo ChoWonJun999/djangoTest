@@ -3,6 +3,19 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="{% static 'css/headerCss.css' %}"/>
 <script>
+    window.history.forward();
+    function noBack(){
+        var getCookie = function(name) {
+            var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+            return value? value[2] : null;
+        };
+        _chk = getCookie("chk");
+        console.log(_chk);
+        console.log(_chk == "0");
+        if(_chk == "0"){
+            window.history.forward();
+        }
+    }
     $(document).ready(function(){
         num_class = document.getElementsByClassName("num");
         for(i=0; i<num_class.length; i++){
@@ -40,7 +53,8 @@
     <head>
         <title>Home</title>
     </head>
-    <body>
+    <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+    <!-- <body> -->
         <div class="header">
             <a class="home_title" href="/">Home</a>
         </div>
@@ -55,14 +69,9 @@
                 <li>
                     <a href="/onoff/">Auto Trade</a>
                 </li>
-                <!-- 
                 <li>
-                    <a href="">라</a>
+                    <a href="/logout/">logout</a>
                 </li>
-                <li>
-                    <a href="">마</a>
-                </li>
-                 -->
             </ul>
         </div>
         <div class="container">
