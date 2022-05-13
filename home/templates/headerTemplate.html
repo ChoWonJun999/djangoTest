@@ -5,16 +5,7 @@
 <script>
     window.history.forward();
     function noBack(){
-        var getCookie = function(name) {
-            var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-            return value? value[2] : null;
-        };
-        _chk = getCookie("chk");
-        console.log(_chk);
-        console.log(_chk == "0");
-        if(_chk == "0"){
-            window.history.forward();
-        }
+        window.history.forward();
     }
     $(document).ready(function(){
         num_class = document.getElementsByClassName("num");

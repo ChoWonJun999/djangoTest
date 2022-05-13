@@ -22,7 +22,15 @@
             , dataType : "json"
             , data : {'user_id':_user_id, 'user_pw':_user_pw, 'csrfmiddlewaretoken':'{{ csrf_token }}'}
             , success : function(obj){
-                document.frm.submit();
+                if(obj.result){
+                    document.frm.action = "/";
+                    document.frm.submit();
+                }else{
+                    alert("ID 또는 PassWord를 확인하세요.");
+                    $("#user_id").val("");
+                    $("#user_pw").val("");
+                    $("#user_id").focus();
+                }
             }
         });
     }
@@ -30,7 +38,7 @@
 <html>
     <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
     <!-- <body> -->
-        <form id="frm" name="frm" method="POST" action="/">
+        <form id="frm" name="frm" method="POST">
             {% csrf_token %}
 
             <h3>Login</h3>
@@ -41,7 +49,7 @@
             <label for="user_pw">Password</label>
             <input type="password" id="user_pw" name="user_pw" placeholder="Password"/>
 
-            <button onclick="go_home();">Log In</button>
+            <button type="button" onclick="go_home();">Log In</button>
 
             <div class="login_sub">
                 <a class="join" onclick="user_join();">회원 가입</a>

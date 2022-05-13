@@ -135,6 +135,10 @@ table td{
     padding-top: 11px;
     padding-bottom: 7px;
 }
+table td pre{
+    font-size: 15px;
+    white-space: pre-wrap;
+}
 td:hover {
     background-color: #8c99f8;
     color: #fff;

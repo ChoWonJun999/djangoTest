@@ -69,22 +69,24 @@
                 <th class="ta_hov col3" data-column="col3">선택</th>
             </tr>
             {% for method in trade_method %}
-                <tr>
-                    <td class="ta_hov col1" data-column="col1">{{ method.method_name }}</td>
-                    <td class="ta_hov td_str col2" data-column="col2"><pre style="font-size: 15px;">{{ method.method_text }}</pre></td>
-                    <td class="ta_hov col3" data-column="col3">
-                        {% if chk.trade_method_id == method.id %}
-                            <a>사용중</a>
-                        {% else %}
-                            <a class="btn" onclick="changeMethod('{{method.id}}', '{{method.method_name}}')">변경</a>
-                        {% endif %}
-                    </td>
-                </tr>
+            <tr>
+                <td class="ta_hov col1" data-column="col1">{{ method.method_name }}</td>
+                <td class="ta_hov td_str col2" data-column="col2">
+                    <pre>{{ method.method_text }}</pre>
+                </td>
+                <td class="ta_hov col3" data-column="col3">
+                    {% if chk.trade_method_id == method.id %}
+                        <a>사용중</a>
+                    {% else %}
+                        <a class="btn" onclick="changeMethod('{{method.id}}', '{{method.method_name}}')">변경</a>
+                    {% endif %}
+                </td>
+            </tr>
             {% endfor %}
             {% if trade_method|length == 0 %}
-                <tr>
-                    <td colspan="3">거래 방식이 없습니다.</td>
-                </tr>
+            <tr>
+                <td colspan="3">거래 방식이 없습니다.</td>
+            </tr>
             {% endif %}
         </table>
     </div>

@@ -28,17 +28,6 @@ class Trade_method(models.Model):
     method_name = models.CharField(max_length=100)
     method_text = models.TextField()
 
-class Api_key(models.Model):
-    """
-    auto trade method
-
-    Columns
-    access_key      access_key
-    secret_key      secret_key
-    """
-    access_key = models.CharField(max_length=100)
-    secret_key = models.CharField(max_length=100)
-
 class User(models.Model) :
     """
         user
@@ -49,3 +38,5 @@ class User(models.Model) :
     """
     user_id = models.CharField(max_length=100)
     user_pw = models.CharField(max_length=100)
+    access_key = models.CharField(max_length=100)
+    secret_key = models.CharField(max_length=100)

@@ -1,34 +1,25 @@
-from django.apps import AppConfig
-
 import threading
 import time
 import schedule
 import pyupbit
 import pandas as pd
 
-class MyAppConfig(AppConfig) :
-    name = 'home'
-    verbose_name = "Home"
-
-    def ready(self) :
-        global auto_trade_thread
-        auto_trade_thread = Worker()
-        auto_trade_thread.daemon = True
-
 class Worker(threading.Thread):
     """
         thread
     """
-    def __init__(self):
+    def __init__(self, _upbit):
         super().__init__()
         self._kill = threading.Event()
         self.chk = True
         self.ticker = "KRW-BTC"
+        self._upbit = _upbit
 
     def run(self):
         """
             thread start
         """
+        _upbit = self._upbit
         self.chk = True
         ticker = self.ticker
         cnt = 20
@@ -37,17 +28,17 @@ class Worker(threading.Thread):
             try :
                 schedule.run_pending()
                 current_price = get_current_price(ticker)
-                krw = get_balance("KRW")
-                ticker_price = get_balance(ticker[4:])
+                krw = get_balance(_upbit, "KRW")
+                ticker_price = get_balance(_upbit, ticker[4:])
                 if krw > 5000 :
                     bbh = BB_1hour(ticker, cnt, k)
                     if bbh.iloc[21]['close'] < bbh.iloc[21]['lower'] * 0.985 and bbh.iloc[19]['close'] < bbh.iloc[19]['lower'] :
                         bbm = BB_15minute(ticker, cnt, k)
                         if bbm.iloc[21]['close'] < bbm.iloc[21]['lower'] * 0.985 and bbh.iloc[19]['close'] < bbh.iloc[19]['lower'] :
-                            upbit.buy_market_order(ticker, krw*0.9999)
-                elif int(current_price * get_balance(ticker[4:])) > 5000 :
-                    if(current_price < get_valuation_gain_loss(ticker[4:])*1.015) :
-                        upbit.sell_market_order(ticker, ticker_price*0.9995)
+                            _upbit.buy_market_order(ticker, krw*0.9999)
+                elif int(current_price * get_balance(_upbit, ticker[4:])) > 5000 :
+                    if(current_price < get_valuation_gain_loss(_upbit, ticker[4:])*1.015) :
+                        _upbit.sell_market_order(ticker, ticker_price*0.9995)
                 time.sleep(1)
             except Exception as e:
                 print(e)
@@ -56,23 +47,13 @@ class Worker(threading.Thread):
         self.chk = False
         self._kill.set()
 
-def login() :
-    # api_key = Api_key.objects.filter(id=1)
-    # print(api_key)
-    """upbit 로그인"""
-    access = 'CR3vYIFTqY2bhXpJ8AU8OK8YrlDCwYq3dkutsHM4'
-    secret = 'PPPxxTjZG1LWPRqeTg5xoQGEsSVpr1DnqxUW1Qxx'
-
-    upbit = pyupbit.Upbit(access, secret)
-    return upbit
-upbit = login()
-print("upbit login")
 def get_current_price(ticker):
     """현재 가격 가져오기"""
     return pyupbit.get_orderbook(ticker=ticker)["orderbook_units"][0]["ask_price"]
-def get_balance(ticker) :
+
+def get_balance(_upbit, ticker) :
     """잔고 조회 및 가져오기"""
-    balances = upbit.get_balances()
+    balances = _upbit.get_balances()
 
     for b in balances:
         if b['currency'] == ticker :
@@ -80,9 +61,9 @@ def get_balance(ticker) :
                 return float(b['balance'])
             else:
                 return 0
-def get_valuation_gain_loss(ticker) :
+def get_valuation_gain_loss(_upbit, ticker) :
     """수익률"""
-    balances = upbit.get_balances()
+    balances = _upbit.get_balances()
     for b in balances:
         if b['currency'] == ticker :
             if b['avg_buy_price'] is not None :
