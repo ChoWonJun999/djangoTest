@@ -41,8 +41,11 @@ body {
     font-weight: 600;
     color: black;
 }
-.nav .onoff{
+.nav_logout{
     float: right;
+}
+.nav ul .nav_logout a{
+    font-size: 15px;
 }
 .container {
     height: auto;
