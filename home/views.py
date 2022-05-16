@@ -25,17 +25,13 @@ def goHome(request) :
         """upbit 로그인"""
         _access_key = _user.access_key
         _secret_key = _user.secret_key
-        print("_access_key = ", _access_key)
-        print("_secret_key = ", _secret_key)
-        # access = 'CR3vYIFTqY2bhXpJ8AU8OK8YrlDCwYq3dkutsHM4'
-        # secret = 'PPPxxTjZG1LWPRqeTg5xoQGEsSVpr1DnqxUW1Qxx'
 
         global _upbit, auto_trade_thread
+        status = Status.objects.get(id=1)
         _upbit = pyupbit.Upbit(_access_key, _secret_key)
-        print("_upbit = ", _upbit)
-        print("type(_upbit) = ", type(_upbit))
-        auto_trade_thread = att.Worker(_upbit)
-        auto_trade_thread.daemon = True
+        if auto_trade_thread == NULL :
+            auto_trade_thread = att.Worker(_upbit, status.trade_method_id)
+            auto_trade_thread.daemon = True
     
     context = {"result" : result}
     return JsonResponse(context)
@@ -121,13 +117,13 @@ def changeStatus(request) :
     status = Status.objects.get(id=1)
     if request.POST.get('chk') == "True" :
         status.status_chk = False
+        auto_trade_thread = att.Worker(_upbit, status.trade_method_id)
+        auto_trade_thread.daemon = True
         auto_trade_thread.start()
         print("auto_trade_thread.isAlive() = ", auto_trade_thread.isAlive())
     elif request.POST.get('chk') == "False" :
         status.status_chk = True
         auto_trade_thread.kill()
-        auto_trade_thread = att.Worker(_upbit)
-        auto_trade_thread.daemon = True
     status.save()
     context = {"result" : "success"}
     return JsonResponse(context)
