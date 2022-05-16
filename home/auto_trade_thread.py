@@ -20,14 +20,18 @@ class Worker(threading.Thread) :
     def run(self):
         """
             thread start
+
+            self._method
+            db에서 id 가져오는거 주의
+            테이터 변동 시 id 맞춰 줘야함
         """
         self.chk = True
         while self.chk : 
-            if self._method == 2 :
+            if self._method == 1 :
                 aVolatilityStrategy(self.ticker, self._upbit)
-            elif self._method == 3 :
+            elif self._method == 2 :
                 bollingerBand(self.ticker, self._upbit)
-            elif self._method == 4 :
+            elif self._method == 3 :
                 fiveTen(self.ticker, self._upbit)
         
     def kill(self) :

@@ -14,9 +14,16 @@ _upbit = NULL
 auto_trade_thread = NULL
 
 def login_html(request) :
+    """
+        login Page
+    """
     return render(request, 'login.html')
 
 def goHome(request) :
+    """
+        login Page
+        login
+    """
     result = True
     try :
         _user = User.objects.get(user_id=request.POST.get('user_id'));
@@ -73,6 +80,9 @@ def joinFinish(request) :
     return redirect("/login/")
 
 def logout(request) :
+    """
+        logout
+    """
     global _upbit, auto_trade_thread
     _upbit = NULL
     auto_trade_thread = NULL
