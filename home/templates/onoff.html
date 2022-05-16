@@ -44,7 +44,9 @@
     <div class="head_con">
         <a class="head_con_title">Auto Trade</a>
         <div style="float: right;">
-            <a class="head_con_sub">현재 방식 : {{ chk.trade_method }}</a>
+            <a class="head_con_sub">
+                타겟 코인 : KRW-BTC / 현재 방식 : {{ chk.trade_method }}
+            </a>
             <input type="hidden" id="chk" name="chk" value="{{chk.status_chk}}"/>
             <a id="chk_btn" class="btn" onclick="changeStatus()">
                 {% if chk.status_chk %}
