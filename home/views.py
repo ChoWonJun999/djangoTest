@@ -8,6 +8,8 @@ import pyupbit
 
 from home import auto_trade_thread as att
 
+import bcrypt
+
 _upbit = NULL
 auto_trade_thread = NULL
 
@@ -17,10 +19,12 @@ def login_html(request) :
 def goHome(request) :
     result = True
     try :
-        _user = User.objects.get(user_id=request.POST.get('user_id'), user_pw=request.POST.get('user_pw'));
+        _user = User.objects.get(user_id=request.POST.get('user_id'));
+        if not bcrypt.checkpw(request.POST.get('user_pw').encode('utf-8'), _user.user_pw.encode('utf-8')) :
+            result = False
     except :
         result = False
-        
+    print("result = ", result)
     if result :
         """upbit 로그인"""
         _access_key = _user.access_key
@@ -50,7 +54,7 @@ def checkId(request) :
     """
     result = False
     try :
-        User.objects.get(user_id=request.POST.get('user_id'));
+        User.objects.get(user_id=request.POST.get('user_id'))
     except :
         result = True
     context = {"result" : result}
@@ -62,10 +66,11 @@ def joinFinish(request) :
         insert into home_user
     """
     _user = User();
-    _user.user_id = request.POST.get('user_id');
-    _user.user_pw = request.POST.get('user_pw');
+    _user.user_id = request.POST.get('user_id')
+    _user_pw = bcrypt.hashpw(password=request.POST.get('user_pw').encode('utf-8'), salt=bcrypt.gensalt())
+    _user.user_pw = _user_pw[2:-1]
     _user.save();
-    return render(request, 'login.html')
+    return redirect("/login/")
 
 def logout(request) :
     global _upbit, auto_trade_thread
