@@ -1,6 +1,6 @@
 html {
-    overflow-x: hidden;
-    overflow-y: hidden;
+    /* overflow-x: hidden; */
+    /* overflow-y: hidden; */
 
     /* 드래그 불가 */
     -ms-user-select: none;
@@ -10,8 +10,6 @@ html {
     user-select:none;
 }
 form{
-    height: 520px;
-    width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
@@ -22,6 +20,14 @@ form{
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 50px 35px;
+}
+.frm_login{
+    height: 520px;
+    width: 400px;
+}
+.frm_join{
+    height: 720px;
+    width: 400px;
 }
 form *{
     font-family: 'Poppins',sans-serif;

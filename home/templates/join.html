@@ -90,10 +90,14 @@
             }
         });
     }
+    function backPage(){
+        document.frm.action = "/";
+        document.frm.submit();
+    }
 </script>
 <html>
     <body>
-        <form id="frm" name="frm" method="POST" action="/">
+        <form id="frm" name="frm" class="frm_join" method="POST" action="/">
             {% csrf_token %}
 
             <h3>회원 정보</h3>
@@ -120,6 +124,7 @@
 
             <div class="login_sub">
                 <a class="btn" onclick="user_join();">회원 가입</a>
+                <a class="btn" onclick="backPage();">뒤로 가기</a>
             </div>
         </form>
     </body>
