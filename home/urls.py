@@ -6,6 +6,7 @@ urlpatterns = [
     path('goHome/', views.goHome, name="goHome"),
     path('join/', views.user_join_html),
     path('checkId/', views.checkId, name="checkId"),
+    path('checkApiKey/', views.checkApiKey, name="checkApiKey"),
     path('joinFinish/', views.joinFinish),
     path('logout/', views.logout),
 

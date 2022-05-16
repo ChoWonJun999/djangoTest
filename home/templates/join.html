@@ -17,6 +17,7 @@
         $.ajax({
             url : "{% url 'checkId' %}"
             , type : "POST"
+            , async : false
             , dataType : "json"
             , data : {'user_id':_user_id, 'csrfmiddlewaretoken':'{{ csrf_token }}'}
             , success : function(obj){
@@ -58,9 +59,36 @@
             $("#user_pw").focus();
             return;
         }
-        alert("회원가입 완료");
-        document.frm.action = "/joinFinish/";
-        document.frm.submit();
+        _access_key = $("#access_key").val();
+        if(_access_key == ""){
+            alert("access_key 입력하세요.");
+            $("#access_key").focus();
+            return;
+        }
+        _secret_key = $("#secret_key").val();
+        if(_secret_key == ""){
+            alert("secret_key 입력하세요.");
+            $("#secret_key").focus();
+            return;
+        }
+
+        $.ajax({
+            url : "{% url 'checkApiKey' %}"
+            , type : "POST"
+            , async : false
+            , dataType : "json"
+            , data : {'access_key':_access_key, 'secret_key':_secret_key, 'csrfmiddlewaretoken':'{{ csrf_token }}'}
+            , success : function(obj){
+                if(obj.result){
+                    alert("회원가입 완료");
+                    document.frm.action = "/joinFinish/";
+                    document.frm.submit();
+                }else{
+                    alert("access_key 또는 secret_key를 확인하세요.");
+                    return;
+                }
+            }
+        });
     }
 </script>
 <html>
@@ -70,7 +98,7 @@
 
             <h3>회원 정보</h3>
 
-            <label for="user_id">ID</label>
+            <label for="user_id">*ID</label>
             <input type="text" id="user_id" name="user_id" placeholder="ID" onchange="change_id();" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-z0-9]/g, '');"/>
 
             <div class="login_sub">
@@ -78,11 +106,17 @@
                 <a class="btn" onclick="check_id();">중복 확인</a>
             </div>
 
-            <label for="user_pw">Password</label>
+            <label for="user_pw">*Password</label>
             <input type="password" id="user_pw" name="user_pw" placeholder="Password" maxlength="16" onkeyup="this.value=this.value.replace(/[^a-z0-9]/g, '');"/>
 
             <label for="user_pw_chk">Password Check</label>
             <input type="password" id="user_pw_chk" name="user_pw_chk" placeholder="Password Check" maxlength="16" onkeyup="this.value=this.value.replace(/[^a-z0-9]/g, '');"/>
+
+            <label for="access_key">*access_key</label>
+            <input type="text" id="access_key" name="access_key" placeholder="access_key"/>
+
+            <label for="secret_key">*secret_key</label>
+            <input type="text" id="secret_key" name="secret_key" placeholder="secret_key"/>
 
             <div class="login_sub">
                 <a class="btn" onclick="user_join();">회원 가입</a>

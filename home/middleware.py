@@ -8,7 +8,7 @@ def StatisticsMiddleware(get_response):
         if request.path_info == "/goHome/" :
             try :
                 _user = User.objects.get(user_id=request.POST.get('user_id'));
-                if not bcrypt.checkpw(request.POST.get('user_pw').encode('utf-8'), _user.user_pw.encode('utf-8')) :
+                if not bcrypt.checkpw(request.POST.get('user_pw').encode('utf-8'), _user.user_pw[2:-1].encode('utf-8')) :
                     _user = ""
                     response = get_response(request)
                     return response
@@ -18,7 +18,7 @@ def StatisticsMiddleware(get_response):
         elif request.path_info == "/logout/" :
             _user = ""
         
-        if request.path_info != "/join/" and request.path_info != "/checkId/" and request.path_info != "/joinFinish/" :
+        if request.path_info != "/join/" and request.path_info != "/checkId/" and request.path_info != "/joinFinish/" and request.path_info != "/checkApiKey/" :
             if request.path_info != "/login/" and _user == "" :
                 return redirect('/login/')
             elif request.path_info == "/login/" and _user != "" :

@@ -27,7 +27,7 @@ def goHome(request) :
     result = True
     try :
         _user = User.objects.get(user_id=request.POST.get('user_id'));
-        if not bcrypt.checkpw(request.POST.get('user_pw').encode('utf-8'), _user.user_pw.encode('utf-8')) :
+        if not bcrypt.checkpw(request.POST.get('user_pw').encode('utf-8'), _user.user_pw[2:-1].encode('utf-8')) :
             result = False
     except :
         result = False
@@ -67,6 +67,24 @@ def checkId(request) :
     context = {"result" : result}
     return JsonResponse(context)
 
+def checkApiKey(request) :
+    """
+        join Page
+        Ajax
+        id overlap check
+    """
+    result = True
+    try :
+        _access_key = request.POST.get('access_key')
+        _secret_key = request.POST.get('secret_key')
+        _upbit_check = pyupbit.Upbit(_access_key, _secret_key)
+        _api_key_list = _upbit_check.get_api_key_list()
+        print(_api_key_list['access_key'])
+    except :
+        result = False
+    context = {"result" : result}
+    return JsonResponse(context)
+
 def joinFinish(request) :
     """
         join Page
@@ -75,7 +93,9 @@ def joinFinish(request) :
     _user = User();
     _user.user_id = request.POST.get('user_id')
     _user_pw = bcrypt.hashpw(password=request.POST.get('user_pw').encode('utf-8'), salt=bcrypt.gensalt())
-    _user.user_pw = _user_pw[2:-1]
+    _user.user_pw = _user_pw
+    _user.access_key = request.POST.get('access_key')
+    _user.secret_key = request.POST.get('secret_key')
     _user.save();
     return redirect("/login/")
 
