@@ -53,11 +53,11 @@ def aVolatilityStrategy(_ticker, _upbit) :
             if target_price < current_price :
                 krw = get_balance(_upbit, "KRW")
                 if krw > 5000:
-                    _ticker.buy_market_order(_ticker, krw*0.9995)
+                    _upbit.buy_market_order(_ticker, krw*0.9995)
         else:
             ticker_price = get_balance(_upbit, _ticker[4:])
             if int(current_price * ticker_price) > 5000:
-                _ticker.sell_market_order(_ticker, ticker_price*0.9995)
+                _upbit.sell_market_order(_ticker, ticker_price*0.9995)
         time.sleep(1)
     except Exception as e:
         print(e)
@@ -95,7 +95,6 @@ def fiveTen(_ticker, _upbit) :
         now = datetime.datetime.now()
         start_time = get_start_time(_ticker)
 
-        # if True :
         if start_time < now < start_time + datetime.timedelta(minutes=1) and oneTime :
             krw = get_balance(_upbit, "KRW")
             btc = get_balance(_upbit, _ticker[4:])
@@ -103,13 +102,10 @@ def fiveTen(_ticker, _upbit) :
             if krw > 5000 :
                 if chk(_ticker) :
                     _upbit.buy_market_order(_ticker, krw*0.9995)
-                    print(now, "\t", current_price, " 매수")
                     oneTime = False
             elif btc > 0.00008 : 
-                # print("hahaB")
                 if chk(_ticker) == False :
                     _upbit.sell_market_order(_ticker, btc*0.9995)
-                    print(now, "\t", current_price, " 매도")
                     oneTime = False
         else :
             oneTime = True
